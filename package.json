@@ -1,7 +1,7 @@
 {
-  "name": "microservice-example",
+  "name": "api-gateway-example",
   "version": "1.0.0",
-  "description": "A simple and opnionated microservice example",
+  "description": "A simple and opnionated API Gateway example",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "files": [
@@ -19,24 +19,22 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/guilhermemj/microservice-example.git"
+    "url": "git+https://github.com/guilhermemj/api-gateway-example.git"
   },
   "keywords": [],
   "author": "Guilherme Jacomini <guilhermem.j@hotmail.com>",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/guilhermemj/microservice-example/issues"
+    "url": "https://github.com/guilhermemj/api-gateway-example/issues"
   },
-  "homepage": "https://github.com/guilhermemj/microservice-example#readme",
+  "homepage": "https://github.com/guilhermemj/api-gateway-example#readme",
   "_moduleAliases": {
     "src": "dist"
   },
   "dependencies": {
     "@guilhermemj/micro-web-server": "^1.1.0",
-    "@types/mongoose": "^5.7.0",
     "dotenv": "^8.2.0",
-    "module-alias": "^2.2.2",
-    "mongoose": "^5.8.11"
+    "module-alias": "^2.2.2"
   },
   "devDependencies": {
     "@typescript-eslint/eslint-plugin": "^2.19.0",
