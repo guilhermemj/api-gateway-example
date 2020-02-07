@@ -1,0 +1,48 @@
+{
+  "name": "microservice-example",
+  "version": "1.0.0",
+  "description": "A simple and opnionated microservice example",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "files": [
+    "dist/"
+  ],
+  "scripts": {
+    "start": "npm run serve",
+    "serve": "node dist",
+    "serve:dev": "ts-node-dev --inspect=3001 --poll --respawn --transpileOnly src/index.ts",
+    "build": "tsc",
+    "build:watch": "tsc -w --skipLibCheck",
+    "lint": "eslint src/ --ext .ts,.tsx",
+    "lint:fix": "npm run lint -- --fix",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/guilhermemj/microservice-example.git"
+  },
+  "keywords": [],
+  "author": "Guilherme Jacomini <guilhermem.j@hotmail.com>",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/guilhermemj/microservice-example/issues"
+  },
+  "homepage": "https://github.com/guilhermemj/microservice-example#readme",
+  "_moduleAliases": {
+    "src": "dist"
+  },
+  "dependencies": {
+    "@guilhermemj/micro-web-server": "^1.1.0",
+    "@types/mongoose": "^5.7.0",
+    "dotenv": "^8.2.0",
+    "module-alias": "^2.2.2",
+    "mongoose": "^5.8.11"
+  },
+  "devDependencies": {
+    "@typescript-eslint/eslint-plugin": "^2.19.0",
+    "@typescript-eslint/parser": "^2.19.0",
+    "eslint": "^6.8.0",
+    "ts-node-dev": "^1.0.0-pre.44",
+    "typescript": "^3.7.5"
+  }
+}
