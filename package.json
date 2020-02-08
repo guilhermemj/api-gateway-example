@@ -33,7 +33,10 @@
   },
   "dependencies": {
     "@guilhermemj/micro-web-server": "^1.1.0",
+    "@types/jsonwebtoken": "^8.3.7",
+    "axios": "^0.19.2",
     "dotenv": "^8.2.0",
+    "jsonwebtoken": "^8.5.1",
     "module-alias": "^2.2.2"
   },
   "devDependencies": {
