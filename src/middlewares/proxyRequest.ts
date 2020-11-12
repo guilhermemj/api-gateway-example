@@ -8,7 +8,7 @@ type ProxyOptions = AxiosRequestConfig | {
 export default (baseUrl: string, options: ProxyOptions = {}): Controller => (
   async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     try {
-      const targetUrl = req.url.split('?')[0];
+      const [targetUrl] = req.url.split('?');
 
       const relevantHeaders = { ...req.headers };
       delete relevantHeaders.host;
@@ -26,12 +26,11 @@ export default (baseUrl: string, options: ProxyOptions = {}): Controller => (
 
       const response = await Axios.request({ ...defaultOptions, ...userOptions });
 
-      res.status(response.status).json(response.data);
+      res.status(response.status).set(response.headers).send(response.data);
     } catch (error) {
-      const { response } = error;
-
-      if (response) {
-        res.status(response.status).json(response.data);
+      if (error.isAxiosError && error.response) {
+        const { status, headers, data } = error.response;
+        res.status(status).set(headers).send(data);
         return;
       }
 
