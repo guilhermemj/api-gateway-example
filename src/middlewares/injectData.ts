@@ -1,12 +1,14 @@
-import { Controller, Request, Response, NextFunction } from '@guilhermemj/micro-web-server';
+import { Request, RequestHandler, Response } from '@guilhermemj/micro-web-server';
 
-type PlainObject<T = any> = { [key: string]: T };
-type InjectDataConfig = PlainObject | ((req: Request, res: Response) => PlainObject);
+type PlainObject = Record<string, any>;
+type InjectDataConfig = PlainObject | (
+  (req: Request, res: Response) => PlainObject
+);
 
 const BODY_METHODS = ['PUT', 'POST', 'PATCH'];
 
-export default (config: InjectDataConfig): Controller => (
-  (req: Request, res: Response, next: NextFunction): void => {
+export default (config: InjectDataConfig): RequestHandler => (
+  (req, res, next): void => {
     const reqDataKey = BODY_METHODS.includes(req.method) ? 'body' : 'query';
 
     const dataFields = (typeof config === 'function' ? config(req, res) : config);

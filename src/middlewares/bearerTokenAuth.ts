@@ -1,20 +1,21 @@
 import jsonwebtoken from 'jsonwebtoken';
+import AppError from '@guilhermemj/app-error';
+import { RequestHandler } from '@guilhermemj/micro-web-server';
 
-import { Controller, Request, Response, NextFunction } from '@guilhermemj/micro-web-server';
-import { RequestError, UNAUTHORIZED_ERROR } from 'src/utils/request-error';
+import { ERR_UNAUTHORIZED } from '../utils/error-presets';
 
-export default (jwtSecret?: string): Controller => (
-  (req: Request, res: Response, next: NextFunction): void => {
+export default (jwtSecret?: string): RequestHandler => (
+  (req, res, next): void => {
     const authHeader = req.headers.authorization;
 
     if (!authHeader || !authHeader.includes('Bearer ')) {
-      throw new RequestError(UNAUTHORIZED_ERROR);
+      throw new AppError("Authentication required", ERR_UNAUTHORIZED);
     }
 
     const authToken = authHeader.replace('Bearer ', '');
 
     if (!authToken) {
-      throw new RequestError(UNAUTHORIZED_ERROR);
+      throw new AppError("Authentication required", ERR_UNAUTHORIZED);
     }
 
     try {
@@ -23,7 +24,7 @@ export default (jwtSecret?: string): Controller => (
 
       res.locals.user = decodedToken;
     } catch (error) {
-      throw new RequestError(UNAUTHORIZED_ERROR);
+      throw new AppError(error.message, ERR_UNAUTHORIZED);
     }
 
     next();

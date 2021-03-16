@@ -1,5 +1,7 @@
-import { Request, Response, NextFunction, Controller } from '@guilhermemj/micro-web-server';
-import { RequestError, UNAUTHORIZED_ERROR, NOT_ALLOWED_ERROR } from 'src/utils/request-error';
+import { RequestHandler } from '@guilhermemj/micro-web-server';
+import AppError from '@guilhermemj/app-error';
+
+import { ERR_FORBIDDEN, ERR_UNAUTHORIZED } from '../utils/error-presets';
 
 const getAllowedGroups = (aclGroups: Array<string>): Array<string> => (
   aclGroups.filter(acl => !acl.startsWith('!'))
@@ -11,7 +13,7 @@ const getDisallowedGroups = (aclGroups: Array<string>): Array<string> => (
     .map(acl => acl.replace('!', ''))
 );
 
-export default (aclGroups: Array<string>): Controller => {
+export default (aclGroups: Array<string>): RequestHandler => {
   const allowedGroups = getAllowedGroups(aclGroups);
   const disallowedGroups = getDisallowedGroups(aclGroups);
 
@@ -27,15 +29,15 @@ export default (aclGroups: Array<string>): Controller => {
     return true;
   };
 
-  return (req: Request, res: Response, next: NextFunction): void => {
+  return (req, res, next): void => {
     const { user } = res.locals;
 
     if (!user) {
-      throw new RequestError(UNAUTHORIZED_ERROR);
+      throw new AppError("Authentication required", ERR_UNAUTHORIZED);
     }
 
     if (!Array.isArray(user.acl) || !userHasAccess(user.acl)) {
-      throw new RequestError(NOT_ALLOWED_ERROR);
+      throw new AppError("Permission denied", ERR_FORBIDDEN);
     }
 
     next();

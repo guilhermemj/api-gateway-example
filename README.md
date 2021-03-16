@@ -1,3 +1,3 @@
-# Microservice Example
+# API Gateway Example
 
-A simple and opnionated microservice example.
+API Gateway example powered by [@guilhermemj/micro-web-server](https://github.com/guilhermemj/micro-web-server). Features custom middlewares to validate, modify and forward requests.

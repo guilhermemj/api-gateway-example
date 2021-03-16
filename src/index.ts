@@ -1,6 +1,4 @@
 import 'dotenv/config';
-import 'module-alias/register';
-
 import WebServer from '@guilhermemj/micro-web-server';
 
 import { defaultErrorHandler } from './middlewares';

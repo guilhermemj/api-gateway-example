@@ -1,15 +1,13 @@
-import { Controller, Request, Response, NextFunction } from '@guilhermemj/micro-web-server';
+import { ErrorRequestHandler } from '@guilhermemj/micro-web-server';
 
-const DEFAULT_ERROR_CODE = 'uncaughtException';
-
-export default (defaultErrorCode?: string): Controller => (
-  (error: any, req: Request, res: Response, next: NextFunction): void => {
+export default (defaultErrorCode = 'ERR_UNCAUGHT_EXCEPTION'): ErrorRequestHandler => (
+  (error, req, res, next): void => {
     if (res.headersSent) {
       return next(error);
     }
 
     res.status(error.httpStatus ?? 500).json({
-      code: error.code ?? defaultErrorCode ?? DEFAULT_ERROR_CODE,
+      code: error.code ?? defaultErrorCode,
       message: error.message ?? error,
     });
   }

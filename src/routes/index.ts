@@ -8,4 +8,4 @@ export default [
       res.json('Hello world!');
     },
   },
-] as Array<Route>;
+] as Route[];

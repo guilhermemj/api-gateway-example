@@ -1,12 +1,12 @@
 import Axios, { AxiosRequestConfig } from 'axios';
-import { Controller, Request, Response, NextFunction, HttpMethod } from '@guilhermemj/micro-web-server';
+import { Request, RequestHandler, HttpMethod } from '@guilhermemj/micro-web-server';
 
 type ProxyOptions = AxiosRequestConfig | {
   (req: Request): AxiosRequestConfig;
 };
 
-export default (baseUrl: string, options: ProxyOptions = {}): Controller => (
-  async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+export default (baseUrl: string, options: ProxyOptions = {}): RequestHandler => (
+  async (req, res, next): Promise<void> => {
     try {
       const [targetUrl] = req.url.split('?');
 
